@@ -1,103 +1,88 @@
-import { component$ } from "@builder.io/qwik";
+import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-
-import Counter from "../components/starter/counter/counter";
-import Hero from "../components/starter/hero/hero";
-import Infobox from "../components/starter/infobox/infobox";
-import Starter from "../components/starter/next-steps/next-steps";
+import {
+  uuid58,
+  uuid58Decode,
+  uuid58DecodeSafe,
+  uuid58EncodeSafe,
+} from "@nakanoaas/uuid58";
 
 export default component$(() => {
+  const encodedId = useSignal("");
+  const decodedId = useSignal("");
+  const isError = useSignal(false);
+
+  const generate = $(() => {
+    const encoded = uuid58();
+    const decoded = uuid58Decode(encoded);
+    encodedId.value = encoded;
+    decodedId.value = decoded;
+
+    isError.value = false;
+  });
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    generate();
+  });
+
   return (
-    <>
-      <Hero />
-      <Starter />
+    <div class="mx-auto max-w-3xl p-8 font-sans">
+      <h1 class="mb-8 text-center text-2xl font-bold text-gray-800">
+        UUID58 Encode/Decode Playground
+      </h1>
 
-      <div role="presentation" class="ellipsis"></div>
-      <div role="presentation" class="ellipsis ellipsis-purple"></div>
-
-      <div class="container container-center container-spacing-xl">
-        <h3>
-          You can <span class="highlight">count</span>
-          <br /> on me
-        </h3>
-        <Counter />
+      <div class="mb-6 flex justify-center">
+        <button
+          onClick$={generate}
+          class="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
+        >
+          Generate New UUID
+        </button>
       </div>
 
-      <div class="container container-flex">
-        <Infobox>
-          <div q:slot="title" class="icon icon-cli">
-            CLI Commands
-          </div>
-          <>
-            <p>
-              <code>npm run dev</code>
-              <br />
-              Starts the development server and watches for changes
-            </p>
-            <p>
-              <code>npm run preview</code>
-              <br />
-              Creates production build and starts a server to preview it
-            </p>
-            <p>
-              <code>npm run build</code>
-              <br />
-              Creates production build
-            </p>
-            <p>
-              <code>npm run qwik add</code>
-              <br />
-              Runs the qwik CLI to add integrations
-            </p>
-          </>
-        </Infobox>
-
-        <div>
-          <Infobox>
-            <div q:slot="title" class="icon icon-apps">
-              Example Apps
-            </div>
-            <p>
-              Have a look at the <a href="/demo/flower">Flower App</a> or the{" "}
-              <a href="/demo/todolist">Todo App</a>.
-            </p>
-          </Infobox>
-
-          <Infobox>
-            <div q:slot="title" class="icon icon-community">
-              Community
-            </div>
-            <ul>
-              <li>
-                <span>Questions or just want to say hi? </span>
-                <a href="https://qwik.dev/chat" target="_blank">
-                  Chat on discord!
-                </a>
-              </li>
-              <li>
-                <span>Follow </span>
-                <a href="https://twitter.com/QwikDev" target="_blank">
-                  @QwikDev
-                </a>
-                <span> on Twitter</span>
-              </li>
-              <li>
-                <span>Open issues and contribute on </span>
-                <a href="https://github.com/QwikDev/qwik" target="_blank">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <span>Watch </span>
-                <a href="https://qwik.dev/media/" target="_blank">
-                  Presentations, Podcasts, Videos, etc.
-                </a>
-              </li>
-            </ul>
-          </Infobox>
-        </div>
+      <div class="mb-6">
+        <label class="mb-2 block font-medium text-gray-700">
+          Encoded Value (UUID58):
+        </label>
+        <input
+          type="text"
+          class={`w-full border p-3 ${isError.value ? "border-red-500" : "border-gray-300"} rounded-md font-mono text-base focus:ring-2 focus:ring-blue-400 focus:outline-none`}
+          value={encodedId.value}
+          onInput$={(_, el) => {
+            const result = uuid58DecodeSafe(el.value);
+            if (result instanceof Error) {
+              decodedId.value = result.message;
+              isError.value = true;
+            } else {
+              decodedId.value = result;
+              isError.value = false;
+            }
+          }}
+        />
       </div>
-    </>
+
+      <div class="mb-6">
+        <label class="mb-2 block font-medium text-gray-700">
+          Decoded Value (Binary Representation):
+        </label>
+        <input
+          type="text"
+          class={`w-full border p-3 ${isError.value ? "border-red-500" : "border-gray-300"} rounded-md font-mono text-base focus:ring-2 focus:ring-blue-400 focus:outline-none`}
+          value={decodedId.value}
+          onInput$={(_, el) => {
+            const result = uuid58EncodeSafe(el.value);
+            if (result instanceof Error) {
+              encodedId.value = result.message;
+              isError.value = true;
+            } else {
+              encodedId.value = result;
+              isError.value = false;
+            }
+          }}
+        />
+      </div>
+    </div>
   );
 });
 
