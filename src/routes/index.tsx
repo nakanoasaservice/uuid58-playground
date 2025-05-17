@@ -46,7 +46,7 @@ export default component$(() => {
     ) {
       this.type = result instanceof Uuid58EncodeError ? "encode" : "decode";
       this.message = result.message;
-      this.name = result.constructor.name;
+      this.name = result.name;
     }),
   });
 
