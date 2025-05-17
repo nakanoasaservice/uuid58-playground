@@ -1,18 +1,30 @@
-# Qwik City App ⚡️
+# UUID58 Playground
 
-- [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+[Live Demo on GitHub Pages](https://nakanoasaservice.github.io/uuid58-playground/)
 
 ---
 
+UUID58 Playground is a web application for encoding and decoding UUIDs using the UUID58 format.
+
+- **UUID58** is a Base58 encoding of the 128-bit UUID binary data, resulting in a shorter, URL-safe string representation.
+- This playground allows you to easily convert between standard UUIDs and UUID58 format.
+- Internally, UUID generation uses `crypto.randomUUID`.
+
+## Features
+
+- Generate a new random UUID and see its UUID58 encoding
+- Convert from UUID58 to standard UUID format and vice versa
+- Error handling with clear messages and visual cues
+- Responsive design for both desktop and mobile devices
+- Links to [JSR](https://jsr.io/@nakanoaas/uuid58), [npm](https://www.npmjs.com/package/@nakanoaas/uuid58), and [GitHub](https://github.com/nakanoasaservice/uuid58)
+
+## Live Demo
+
+You can try the playground here:
+
+👉 [https://nakanoasaservice.github.io/uuid58-playground/](https://nakanoasaservice.github.io/uuid58-playground/)
+
 ## Project Structure
-
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
-
-Inside your project, you'll see the following directory structure:
 
 ```
 ├── public/
@@ -21,51 +33,39 @@ Inside your project, you'll see the following directory structure:
     ├── components/
     │   └── ...
     └── routes/
-        └── ...
+        └── index.tsx
 ```
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
-
-- `src/components`: Recommended directory for components.
-
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
-
-## Add Integrations and deployment
-
-Use the `pnpm qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
-
-```shell
-pnpm qwik add # or `pnpm qwik add`
-```
+- `src/routes`: Directory-based routing. The main page is implemented in `index.tsx`.
+- `src/components`: Place for reusable UI components.
+- `public`: Static assets (images, etc.).
 
 ## Development
 
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
+This project uses [Qwik](https://qwik.dev/) and [QwikCity](https://qwik.dev/qwikcity/overview/).
 
-```shell
-npm start # or `pnpm start`
+To start development:
+
+```bash
+pnpm install
+pnpm start
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+## Build & Preview
 
-## Preview
+To build and preview the production version locally:
 
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-pnpm preview # or `pnpm preview`
+```bash
+pnpm build
+pnpm preview
 ```
 
-## Production
+## Deployment
 
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
+This site is deployed to GitHub Pages:
 
-```shell
-pnpm build # or `pnpm build`
-```
+- [https://nakanoasaservice.github.io/uuid58-playground/](https://nakanoasaservice.github.io/uuid58-playground/)
 
-## Static Site Generator (Node.js)
+## License
 
-```shell
-pnpm build.server
-```
+MIT
