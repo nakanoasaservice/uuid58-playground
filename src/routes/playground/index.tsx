@@ -67,6 +67,15 @@ export default component$(() => {
   return (
     <div class="container">
       <h1 class="title">UUID58 Encode/Decode Playground</h1>
+
+      <button onClick$={() => {
+        const encoded = uuid58()
+        const decoded = uuid58Decode(encoded)
+        encodedId.value = encoded
+        decodedId.value = decoded
+      }}>
+        Generate New UUID
+      </button>
       
       <div class="input-group">
         <label class="label">Encoded Value (UUID58):</label>
