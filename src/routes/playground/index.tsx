@@ -1,4 +1,4 @@
-import { component$, useSignal, useStyles$, useTask$ } from "@builder.io/qwik";
+import { $, component$, useSignal, useStyles$, useTask$ } from "@builder.io/qwik";
 import { uuid58, uuid58Decode, uuid58DecodeSafe, uuid58EncodeSafe } from "@nakanoaas/uuid58";
 
 
@@ -54,11 +54,16 @@ export default component$(() => {
   const encodedId = useSignal("");
   const decodedId = useSignal("");
 
-  useTask$(() => {
+  const generate = $(() => {
     const encoded = uuid58()
     const decoded = uuid58Decode(encoded)
     encodedId.value = encoded
     decodedId.value = decoded
+  })
+
+
+  useTask$(() => {
+    generate()
   })
 
   const encodedError = useSignal(false);
@@ -68,12 +73,7 @@ export default component$(() => {
     <div class="container">
       <h1 class="title">UUID58 Encode/Decode Playground</h1>
 
-      <button onClick$={() => {
-        const encoded = uuid58()
-        const decoded = uuid58Decode(encoded)
-        encodedId.value = encoded
-        decodedId.value = decoded
-      }}>
+      <button onClick$={generate}>
         Generate New UUID
       </button>
       
