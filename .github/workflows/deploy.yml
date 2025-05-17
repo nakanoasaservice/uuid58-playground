@@ -35,7 +35,7 @@ jobs:
       - name: Upload dist to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./dist/uuid58-playground
 
       - name: Deploy to GitHub Pages
         id: deployment
