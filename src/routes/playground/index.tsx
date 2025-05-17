@@ -1,64 +1,19 @@
-import { $, component$, useSignal, useStyles$, useTask$ } from "@builder.io/qwik";
+import { $, component$, useSignal, useTask$ } from "@builder.io/qwik";
 import { uuid58, uuid58Decode, uuid58DecodeSafe, uuid58EncodeSafe } from "@nakanoaas/uuid58";
 
 
 export default component$(() => {
-  useStyles$(`
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-      font-family: sans-serif;
-    }
-    
-    .title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      color: #333;
-      text-align: center;
-    }
-    
-    .input-group {
-      margin-bottom: 1.5rem;
-    }
-    
-    .label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-      color: #555;
-    }
-    
-    .input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 1rem;
-    }
-    
-    .input:focus {
-      outline: none;
-      border-color: #4299e1;
-      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-    }
-    
-    .error {
-      color: #e53e3e;
-      font-style: italic;
-    }
-  `);
-
   const encodedId = useSignal("");
   const decodedId = useSignal("");
+  const isError = useSignal(false);
 
   const generate = $(() => {
     const encoded = uuid58()
     const decoded = uuid58Decode(encoded)
     encodedId.value = encoded
     decodedId.value = decoded
+
+    isError.value = false
   })
 
 
@@ -66,50 +21,52 @@ export default component$(() => {
     generate()
   })
 
-  const encodedError = useSignal(false);
-  const decodedError = useSignal(false);
-
   return (
-    <div class="container">
-      <h1 class="title">UUID58 Encode/Decode Playground</h1>
+    <div class="max-w-3xl mx-auto p-8 font-sans">
+      <h1 class="text-2xl font-bold mb-8 text-center text-gray-800">UUID58 Encode/Decode Playground</h1>
 
-      <button onClick$={generate}>
-        Generate New UUID
-      </button>
+      <div class="mb-6 flex justify-center">
+        <button 
+          onClick$={generate}
+          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors duration-200"
+        >
+          Generate New UUID
+        </button>
+      </div>
       
-      <div class="input-group">
-        <label class="label">Encoded Value (UUID58):</label>
+      <div class="mb-6">
+        <label class="block mb-2 font-medium text-gray-700">Encoded Value (UUID58):</label>
         <input 
           type="text" 
-          class={`input ${encodedError.value ? 'error' : ''}`}
+          class={`w-full p-3 border ${isError.value ? 'border-red-500' : 'border-gray-300'} rounded-md font-mono text-base focus:outline-none focus:ring-2 focus:ring-blue-400`}
           value={encodedId.value} 
           onInput$={(_, el) => {
             const result = uuid58DecodeSafe(el.value);
             if (result instanceof Error) {
               decodedId.value = result.message;
-              decodedError.value = true;
+              isError.value = true;
             } else {
               decodedId.value = result;
-              decodedError.value = false;
+              isError.value = false;
             }
           }}
         />
       </div>
 
-      <div class="input-group">
-        <label class="label">Decoded Value (Binary Representation):</label>
+      <div class="mb-6">
+        <label class="block mb-2 font-medium text-gray-700">Decoded Value (Binary Representation):</label>
         <input 
           type="text" 
-          class={`input ${decodedError.value ? 'error' : ''}`}
+          class={`w-full p-3 border ${isError.value ? 'border-red-500' : 'border-gray-300'} rounded-md font-mono text-base focus:outline-none focus:ring-2 focus:ring-blue-400`}
           value={decodedId.value} 
           onInput$={(_, el) => {
             const result = uuid58EncodeSafe(el.value);
             if (result instanceof Error) {
               encodedId.value = result.message;
-              encodedError.value = true;
+              isError.value = true;
             } else {
               encodedId.value = result;
-              encodedError.value = false;
+              isError.value = false;
             }
           }}
         />
