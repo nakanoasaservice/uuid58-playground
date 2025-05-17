@@ -65,13 +65,13 @@ export default component$(() => {
   });
 
   return (
-    <div class="mx-auto max-w-3xl p-8 font-sans">
-      <h1 class="mb-8 text-center text-2xl font-bold text-gray-800">
+    <div class="mx-auto max-w-3xl px-3 py-6 font-sans sm:p-8">
+      <h1 class="mb-6 text-center text-xl font-bold text-gray-800 sm:mb-8 sm:text-2xl">
         UUID58 Playground
       </h1>
 
       <div class="mb-6 text-center">
-        <p class="text-sm text-gray-600">
+        <p class="text-xs text-gray-600 sm:text-sm">
           UUID58 is a Base58 encoding of the 128-bit UUID binary data, resulting
           in a shorter, URL-safe string representation.
         </p>
@@ -81,7 +81,6 @@ export default component$(() => {
             target="_blank"
             rel="noopener noreferrer"
             class="text-gray-800 transition-colors hover:text-gray-600"
-            title="GitHub Repository"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +125,12 @@ export default component$(() => {
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 block font-medium text-gray-700">
+        <label class="mb-2 block text-sm font-medium text-gray-700 sm:text-base">
           Encoded (UUID58 Format):
         </label>
         <input
           type="text"
-          class={`w-full rounded-md border p-3 font-mono text-base focus:ring-2 focus:ring-blue-400 focus:outline-none ${
+          class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "decode"
               ? "border-red-500 bg-red-50"
               : "border-gray-300"
@@ -148,7 +147,7 @@ export default component$(() => {
           }}
         />
         {error.type === "decode" && (
-          <div class="mt-2 rounded-md border border-red-400 bg-red-100 p-3 text-red-700">
+          <div class="mt-2 rounded-md border border-red-400 bg-red-100 p-2 text-sm text-red-700 sm:p-3">
             <p class="font-medium">{error.name}</p>
             <p>{error.message}</p>
           </div>
@@ -156,12 +155,12 @@ export default component$(() => {
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 block font-medium text-gray-700">
+        <label class="mb-2 block text-sm font-medium text-gray-700 sm:text-base">
           Decoded (UUID Format):
         </label>
         <input
           type="text"
-          class={`w-full rounded-md border p-3 font-mono text-base focus:ring-2 focus:ring-blue-400 focus:outline-none ${
+          class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "encode"
               ? "border-red-500 bg-red-50"
               : "border-gray-300"
@@ -178,7 +177,7 @@ export default component$(() => {
           }}
         />
         {error.type === "encode" && (
-          <div class="mt-2 rounded-md border border-red-400 bg-red-100 p-3 text-red-700">
+          <div class="mt-2 rounded-md border border-red-400 bg-red-100 p-2 text-sm text-red-700 sm:p-3">
             <p class="font-medium">{error.name}</p>
             <p>{error.message}</p>
           </div>
