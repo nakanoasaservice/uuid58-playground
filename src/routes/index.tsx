@@ -130,6 +130,7 @@ export default component$(() => {
         </label>
         <input
           type="text"
+          spellcheck={false}
           class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "decode"
               ? "border-red-500 bg-red-50"
@@ -160,6 +161,7 @@ export default component$(() => {
         </label>
         <input
           type="text"
+          spellcheck={false}
           class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "encode"
               ? "border-red-500 bg-red-50"
