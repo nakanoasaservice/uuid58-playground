@@ -115,7 +115,7 @@ export default component$(() => {
       <div class="mb-6 flex flex-col items-center justify-center">
         <button
           onClick$={generate}
-          class="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
+          class="touch-manipulation rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
         >
           Generate
         </button>
