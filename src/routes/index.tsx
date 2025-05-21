@@ -7,10 +7,9 @@ import {
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import {
-  uuid58,
-  uuid58Decode,
   Uuid58DecodeError,
   uuid58DecodeSafe,
+  uuid58Encode,
   Uuid58EncodeError,
   uuid58EncodeSafe,
 } from "@nakanoaas/uuid58";
@@ -51,8 +50,8 @@ export default component$(() => {
   });
 
   const generate = $(() => {
-    const encoded = uuid58();
-    const decoded = uuid58Decode(encoded);
+    const decoded = crypto.randomUUID();
+    const encoded = uuid58Encode(decoded);
     encodedId.value = encoded;
     decodedId.value = decoded;
 
