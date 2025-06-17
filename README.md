@@ -8,7 +8,7 @@ UUID58 Playground is a web application for encoding and decoding UUIDs using the
 
 - **UUID58** is a Base58 encoding of the 128-bit UUID binary data, resulting in a shorter, URL-safe string representation.
 - This playground allows you to easily convert between standard UUIDs and UUID58 format.
-- Internally, UUID generation uses `crypto.randomUUID`.
+- Internally, UUID58 generation uses `crypto.getRandomValues()`.
 
 ## Features
 
