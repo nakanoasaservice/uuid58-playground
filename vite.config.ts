@@ -23,13 +23,6 @@ export default defineConfig(({ command, mode }): UserConfig => {
   return {
     plugins: [qwikCity(), qwikVite(), tsconfigPaths(), tailwindcss()],
     base: "/uuid58-playground/",
-    build: {
-      minify: false,
-      terserOptions: {
-        compress: false,
-        mangle: false,
-      },
-    },
 
     // This tells Vite which dependencies to pre-build in dev mode.
     optimizeDeps: {
