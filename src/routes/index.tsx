@@ -120,7 +120,7 @@ export default component$(() => {
           Generate
         </button>
         <p class="mt-2 text-xs text-gray-500">
-          Using crypto.randomUUID internally
+          Using crypto.getRandomValues() internally
         </p>
       </div>
 
