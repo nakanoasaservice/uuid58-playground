@@ -16,7 +16,7 @@ import {
 } from "@nakanoaas/uuid58";
 
 interface ErrorStore {
-  type: "encode" | "decode" | "";
+  type: "encode" | "decode" | null;
   name: string;
   message: string;
   clear: (this: ErrorStore) => void;
@@ -29,15 +29,15 @@ interface ErrorStore {
 export default component$(() => {
   const encodedId = useSignal("");
   const decodedId = useSignal("");
-  const error = useStore({
-    type: "" as "encode" | "decode" | "",
+  const error = useStore<ErrorStore>({
+    type: null,
     name: "",
     message: "",
 
     clear: $(function (this: ErrorStore) {
-      this.type = "";
-      this.message = "";
+      this.type = null;
       this.name = "";
+      this.message = "";
     }),
 
     setError: $(function (
@@ -45,8 +45,8 @@ export default component$(() => {
       result: Uuid58EncodeError | Uuid58DecodeError,
     ) {
       this.type = result instanceof Uuid58EncodeError ? "encode" : "decode";
-      this.message = result.message;
       this.name = result.name;
+      this.message = result.message;
     }),
   });
 
@@ -75,6 +75,11 @@ export default component$(() => {
           UUID58 is a Base58 encoding of the 128-bit UUID binary data, resulting
           in a shorter, URL-safe string representation.
         </p>
+        <div class="mt-4">
+          <pre class="inline-block rounded-md bg-gray-100 p-2 font-mono text-xs text-gray-800 sm:p-3 sm:text-sm">
+            <code>$ pnpm add @nakanoaas/uuid58</code>
+          </pre>
+        </div>
         <div class="mt-4 flex items-center justify-center gap-3">
           <a
             href="https://github.com/nakanoasaservice/uuid58"
@@ -97,7 +102,12 @@ export default component$(() => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src="https://jsr.io/badges/@nakanoaas/uuid58" alt="JSR" />
+            <img
+              src="https://jsr.io/badges/@nakanoaas/uuid58"
+              width="75"
+              height="20"
+              alt="JSR"
+            />
           </a>
           <a
             href="https://badge.fury.io/js/@nakanoaas%2Fuuid58"
@@ -106,6 +116,8 @@ export default component$(() => {
           >
             <img
               src="https://badge.fury.io/js/@nakanoaas%2Fuuid58.svg"
+              width="126"
+              height="20"
               alt="npm version"
             />
           </a>
