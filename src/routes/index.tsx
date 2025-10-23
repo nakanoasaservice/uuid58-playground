@@ -71,7 +71,7 @@ export default component$(() => {
       </h1>
 
       <div class="mb-6 text-center">
-        <p class="text-xs text-gray-600 sm:text-sm">
+        <p class="text-xs text-gray-700 sm:text-sm">
           UUID58 is a Base58 encoding of the 128-bit UUID binary data, resulting
           in a shorter, URL-safe string representation.
         </p>
@@ -86,6 +86,7 @@ export default component$(() => {
             target="_blank"
             rel="noopener noreferrer"
             class="text-gray-800 transition-colors hover:text-gray-600"
+            aria-label="GitHub repository"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -131,17 +132,21 @@ export default component$(() => {
         >
           Generate
         </button>
-        <p class="mt-2 text-xs text-gray-500">
+        <p class="mt-2 text-xs text-gray-700">
           Using crypto.getRandomValues() internally
         </p>
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 block text-sm font-medium text-gray-700 sm:text-base">
+        <label
+          for="encoded-input"
+          class="mb-2 block text-sm font-medium text-gray-700 sm:text-base"
+        >
           Encoded (UUID58 Format):
         </label>
         <input
           type="text"
+          id="encoded-input"
           spellcheck={false}
           class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "decode"
@@ -168,11 +173,15 @@ export default component$(() => {
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 block text-sm font-medium text-gray-700 sm:text-base">
+        <label
+          for="decoded-input"
+          class="mb-2 block text-sm font-medium text-gray-700 sm:text-base"
+        >
           Decoded (UUID Format):
         </label>
         <input
           type="text"
+          id="decoded-input"
           spellcheck={false}
           class={`w-full overflow-x-auto rounded-md border p-2 font-mono text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none sm:p-3 sm:text-base ${
             error.type === "encode"
