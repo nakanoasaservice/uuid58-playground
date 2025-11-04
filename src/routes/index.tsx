@@ -29,6 +29,7 @@ interface ErrorStore {
 export default component$(() => {
   const encodedId = useSignal("");
   const decodedId = useSignal("");
+  const copied = useSignal(false);
   const error = useStore<ErrorStore>({
     type: null,
     name: "",
@@ -59,6 +60,18 @@ export default component$(() => {
     error.clear();
   });
 
+  const copyToClipboard = $(async () => {
+    try {
+      await navigator.clipboard.writeText("npm i @nakanoaas/uuid58");
+      copied.value = true;
+      setTimeout(() => {
+        copied.value = false;
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  });
+
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
     generate();
@@ -75,10 +88,49 @@ export default component$(() => {
           UUID58 is a Base58 encoding of the 128-bit UUID binary data, resulting
           in a shorter, URL-safe string representation.
         </p>
-        <div class="mt-4">
-          <pre class="inline-block rounded-md bg-gray-100 p-2 font-mono text-xs text-gray-800 sm:p-3 sm:text-sm">
-            <code>$ pnpm add @nakanoaas/uuid58</code>
-          </pre>
+        <div class="mt-4 flex items-center justify-center">
+          <div class="relative inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 font-mono text-xs text-gray-800 sm:px-5 sm:py-3 sm:text-sm">
+            <span class="mr-2 text-gray-500">&gt;</span>
+            <span>npm i @nakanoaas/uuid58</span>
+            <button
+              onClick$={copyToClipboard}
+              class="ml-3 flex items-center justify-center rounded p-1 transition-colors hover:bg-gray-200"
+              aria-label="Copy to clipboard"
+            >
+              {copied.value ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-green-600"
+                >
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-gray-600"
+                >
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path d="M4 16c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
         <div class="mt-4 flex items-center justify-center gap-3">
           <a
