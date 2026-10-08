@@ -1,17 +1,17 @@
-import { staticAdapter } from "@builder.io/qwik-city/adapters/static/vite";
-import { extendConfig } from "@builder.io/qwik-city/vite";
+import { ssgAdapter } from "@qwik.dev/router/adapters/ssg/vite";
+import { extendConfig } from "@qwik.dev/router/vite";
 import baseConfig from "../../vite.config";
 
 export default extendConfig(baseConfig, () => {
   return {
     build: {
       ssr: true,
-      rollupOptions: {
-        input: ["@qwik-city-plan"],
+      rolldownOptions: {
+        input: ["@qwik-router-config"],
       },
     },
     plugins: [
-      staticAdapter({
+      ssgAdapter({
         origin: "https://nakanoasaservice.github.io",
       }),
     ],

@@ -2,8 +2,8 @@
  * This is the base config for vite.
  * When building, the adapter config is used which loads this file and extends it.
  */
-import { qwikCity } from '@builder.io/qwik-city/vite';
-import { qwikVite } from '@builder.io/qwik/optimizer';
+import { qwikRouter } from '@qwik.dev/router/vite';
+import { qwikVite } from '@qwik.dev/core/optimizer';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, type UserConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -16,12 +16,12 @@ const { dependencies = {}, devDependencies = {} } = pkg as any as {
 };
 errorOnDuplicatesPkgDeps(devDependencies, dependencies);
 /**
- * Note that Vite normally starts from `index.html` but the qwikCity plugin makes start at `src/entry.ssr.tsx` instead.
+ * Note that Vite normally starts from `index.html` but the qwikRouter plugin makes start at `src/entry.ssr.tsx` instead.
  */
 
 export default defineConfig(({ command, mode }): UserConfig => {
   return {
-    plugins: [qwikCity(), qwikVite(), tsconfigPaths(), tailwindcss()],
+    plugins: [qwikRouter(), qwikVite(), tsconfigPaths(), tailwindcss()],
     base: "/uuid58-playground/",
 
     // This tells Vite which dependencies to pre-build in dev mode.
@@ -76,16 +76,6 @@ function errorOnDuplicatesPkgDeps(
   const duplicateDeps = Object.keys(devDependencies).filter(
     dep => dependencies[dep]
   );
-  // include any known qwik packages
-  const qwikPkg = Object.keys(dependencies).filter(value =>
-    /qwik/i.test(value)
-  );
-  // any errors for missing "qwik-city-plan"
-  // [PLUGIN_ERROR]: Invalid module "@qwik-city-plan" is not a valid package
-  msg = `Move qwik packages ${qwikPkg.join(', ')} to devDependencies`;
-  if (qwikPkg.length > 0) {
-    throw new Error(msg);
-  }
   // Format the error message with the duplicates list.
   // The `join` function is used to represent the elements of the 'duplicateDeps' array as a comma-separated string.
   msg = `
