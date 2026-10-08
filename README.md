@@ -42,13 +42,13 @@ You can try the playground here:
 
 ## Development
 
-This project uses [Qwik](https://qwik.dev/) and [QwikCity](https://qwik.dev/qwikcity/overview/).
+This project uses [Qwik](https://qwik.dev/) and [Qwik Router](https://qwik.dev/docs/routing/), with [Bun](https://bun.sh/) as the package manager and runtime.
 
 To start development:
 
 ```bash
-pnpm install
-pnpm start
+bun install
+bun start
 ```
 
 ## Build & Preview
@@ -56,8 +56,8 @@ pnpm start
 To build and preview the production version locally:
 
 ```bash
-pnpm build
-pnpm preview
+bun run build
+bun run preview
 ```
 
 ## Deployment
