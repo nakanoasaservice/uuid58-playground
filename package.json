@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@nakanoaas/uuid58": "^1.2.1",
-    "alpinejs": "^3.17.5"
+    "solid-js": "^1.9.17"
   },
   "devDependencies": {
-    "@types/alpinejs": "^3.17.0",
+    "vite-plugin-solid": "^2.11.14",
     "vite-plus": "1.4.0"
   },
   "overrides": {
