@@ -41,8 +41,9 @@ This project uses [Solid.js](https://www.solidjs.com/) with TSX and plain CSS an
 [Vite+](https://viteplus.dev/) for development, builds, formatting, linting, and
 TypeScript checking. UI expressions and event handlers are written in TypeScript. Dependencies are
 bundled locally; no runtime CDN is required for JavaScript.
-[Bun](https://bun.sh/) is the package manager. Use Node.js 24 for the local Vite+
-CLI; `mise install` installs both runtimes. No global Vite+ installation is needed.
+[Bun](https://bun.sh/) is the package manager and script runtime (`bunfig.toml`
+enables `run.bun`). Run `mise install` to install Bun. No separate Node.js setup
+or global Vite+ installation is needed for the commands below.
 
 To start development:
 
