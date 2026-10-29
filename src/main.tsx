@@ -5,6 +5,11 @@ import "./global.css";
 
 type Field = "encoded" | "decoded";
 type ConversionError = { field: Field; name: string; message: string };
+type ConversionState = {
+  encoded: string;
+  decoded: string;
+  error: ConversionError | undefined;
+};
 const fields: { key: Field; label: string }[] = [
   { key: "encoded", label: "Encoded (UUID58 Format):" },
   { key: "decoded", label: "Decoded (UUID Format):" },
@@ -12,31 +17,32 @@ const fields: { key: Field; label: string }[] = [
 
 function Playground() {
   const initial = uuid58();
-  const [ids, setIds] = createSignal({ encoded: initial, decoded: uuid58Decode(initial) });
-  const [error, setError] = createSignal<ConversionError>();
+  const [conversion, setConversion] = createSignal<ConversionState>({
+    encoded: initial,
+    decoded: uuid58Decode(initial),
+    error: undefined,
+  });
   const [copyStatus, setCopyStatus] = createSignal("Copy");
   let copyTimer: ReturnType<typeof setTimeout> | undefined;
   onCleanup(() => clearTimeout(copyTimer));
 
   function generate() {
     const encoded = uuid58();
-    setIds({ encoded, decoded: uuid58Decode(encoded) });
-    setError(undefined);
+    setConversion({ encoded, decoded: uuid58Decode(encoded), error: undefined });
   }
 
   function convert(field: Field, value: string) {
     const decoding = field === "encoded";
     const result = decoding ? uuid58DecodeSafe(value) : uuid58EncodeSafe(value);
-    setIds((previous) => ({
+    setConversion((previous) => ({
       ...previous,
       [field]: value,
       ...(typeof result === "string" ? { [decoding ? "decoded" : "encoded"]: result } : {}),
+      error:
+        typeof result === "string"
+          ? undefined
+          : { field, name: result.name, message: result.message },
     }));
-    setError(
-      typeof result === "string"
-        ? undefined
-        : { field, name: result.name, message: result.message },
-    );
   }
 
   async function copy() {
@@ -106,15 +112,17 @@ function Playground() {
             <input
               type="text"
               id={`${field.key}-input`}
-              value={ids()[field.key]}
+              value={conversion()[field.key]}
               onInput={(event) => convert(field.key, event.currentTarget.value)}
               spellcheck={false}
               autocomplete="off"
               autocapitalize="off"
-              aria-invalid={error()?.field === field.key}
-              aria-describedby={error()?.field === field.key ? `${field.key}-error` : undefined}
+              aria-invalid={conversion().error?.field === field.key}
+              aria-describedby={
+                conversion().error?.field === field.key ? `${field.key}-error` : undefined
+              }
             />
-            <Show when={error()?.field === field.key && error()}>
+            <Show when={conversion().error?.field === field.key && conversion().error}>
               {(issue) => (
                 <div class="error" id={`${field.key}-error`} role="alert">
                   <strong>{issue().name}</strong>
