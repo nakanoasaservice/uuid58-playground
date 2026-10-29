@@ -26,23 +26,24 @@ You can try the playground here:
 
 ## Project Structure
 
+```text
+├── index.html       # Page metadata and app mount point
+├── src/
+│   ├── main.tsx     # Typed UI, conversion, and clipboard state
+│   └── global.css   # Responsive styles
+├── public/robots.txt
+└── vite.config.ts   # Build, lint, and formatting configuration
 ```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── index.tsx
-```
-
-- `src/routes`: Directory-based routing. The main page is implemented in `index.tsx`.
-- `src/components`: Place for reusable UI components.
-- `public`: Static assets (images, etc.).
 
 ## Development
 
-This project uses [Qwik](https://qwik.dev/) and [Qwik Router](https://qwik.dev/docs/routing/), with [Bun](https://bun.sh/) as the package manager and runtime.
+This project uses [Solid.js](https://www.solidjs.com/) with TSX and plain CSS and
+[Vite+](https://viteplus.dev/) for development, builds, formatting, linting, and
+TypeScript checking. UI expressions and event handlers are written in TypeScript. Dependencies are
+bundled locally; no runtime CDN is required for JavaScript.
+[Bun](https://bun.sh/) is the package manager and script runtime (`bunfig.toml`
+enables `run.bun`). Run `mise install` to install Bun. No separate Node.js setup
+or global Vite+ installation is needed for the commands below.
 
 To start development:
 
@@ -59,6 +60,13 @@ To build and preview the production version locally:
 bun run build
 bun run preview
 ```
+
+Run `bun run check` for formatting, lint, and TypeScript checks together.
+Run `bun run fmt` to format files. These share `vite.config.ts`; `tsconfig.json`
+controls strict TypeScript checking, including TSX expressions and event handlers.
+
+When upgrading Vite+, keep the `vite` override aligned with `vite-plus` and the
+`vitest` override aligned with the bundled version (`bunx --no-install vp toolchain vitest`).
 
 ## Deployment
 
