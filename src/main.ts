@@ -1,11 +1,9 @@
 import Alpine from "alpinejs";
-import {
-  uuid58,
-  uuid58Decode,
-  uuid58DecodeSafe,
-  uuid58EncodeSafe,
-} from "@nakanoaas/uuid58";
+import { uuid58, uuid58Decode, uuid58DecodeSafe, uuid58EncodeSafe } from "@nakanoaas/uuid58";
 import "./global.css";
+
+type Field = "encoded" | "decoded";
+type ConversionError = { field: Field; name: string; message: string };
 
 Alpine.data("playground", () => ({
   fields: [
@@ -13,9 +11,9 @@ Alpine.data("playground", () => ({
     { key: "decoded", label: "Decoded (UUID Format):" },
   ],
   ids: { encoded: "", decoded: "" },
-  error: null,
+  error: null as ConversionError | null,
   copyStatus: "Copy",
-  copyTimer: null,
+  copyTimer: undefined as ReturnType<typeof setTimeout> | undefined,
 
   init() {
     this.generate();
@@ -25,15 +23,15 @@ Alpine.data("playground", () => ({
     this.ids.decoded = uuid58Decode(this.ids.encoded);
     this.error = null;
   },
-  convert(field, value) {
+  convert(field: Field, value: string) {
     this.ids[field] = value;
     const decoding = field === "encoded";
     const result = decoding ? uuid58DecodeSafe(value) : uuid58EncodeSafe(value);
     this.error =
-      typeof result === "string"
-        ? null
-        : { field, name: result.name, message: result.message };
-    if (!this.error) this.ids[decoding ? "decoded" : "encoded"] = result;
+      typeof result === "string" ? null : { field, name: result.name, message: result.message };
+    if (typeof result === "string") {
+      this.ids[decoding ? "decoded" : "encoded"] = result;
+    }
   },
   async copy() {
     clearTimeout(this.copyTimer);

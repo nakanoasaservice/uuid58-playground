@@ -29,18 +29,20 @@ You can try the playground here:
 ```text
 ├── index.html       # Page markup and Alpine directives
 ├── src/
-│   ├── main.js      # Generation, conversion, and clipboard state
+│   ├── main.ts      # Generation, conversion, and clipboard state
 │   └── global.css   # Responsive styles
 ├── public/robots.txt
-└── vite.config.js   # GitHub Pages base path
+└── vite.config.ts   # Build, lint, and formatting configuration
 ```
 
 ## Development
 
 This project uses [Alpine.js](https://alpinejs.dev/) with plain HTML/CSS and
-[Vite](https://vite.dev/) for development and static builds. Dependencies are
+[Vite+](https://viteplus.dev/) for development, builds, formatting, linting, and
+TypeScript checking. Application scripts are written in TypeScript. Dependencies are
 bundled locally; no runtime CDN is required for JavaScript.
-[Bun](https://bun.sh/) is the package manager and runtime.
+[Bun](https://bun.sh/) is the package manager. Use Node.js 24 for the local Vite+
+CLI; `mise install` installs both runtimes. No global Vite+ installation is needed.
 
 To start development:
 
@@ -58,7 +60,13 @@ bun run build
 bun run preview
 ```
 
-Check formatting and lint with `bun run fmt.check` and `bun run lint`.
+Run `bun run check` for formatting, lint, and TypeScript checks together.
+Run `bun run fmt` to format files. These share `vite.config.ts`; `tsconfig.json`
+controls strict TypeScript checking. Alpine expressions in HTML are evaluated at
+runtime and are not covered by TypeScript checks.
+
+When upgrading Vite+, keep the `vite` override aligned with `vite-plus` and the
+`vitest` override aligned with the bundled version (`bunx --no-install vp toolchain vitest`).
 
 ## Deployment
 
