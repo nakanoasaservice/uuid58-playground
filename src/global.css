@@ -1,9 +1,135 @@
-/**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles. No matter which components are in the page or matching route,
- * the styles in here will be applied to the Document, without any sort of CSS scoping.
- *
- */
-
-@import "tailwindcss";
+[x-cloak] {
+  display: none !important;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: #1f2937;
+  background: white;
+  font:
+    14px/1.5 system-ui,
+    sans-serif;
+}
+main {
+  max-width: 768px;
+  margin: auto;
+  padding: 32px;
+}
+header,
+.generate {
+  text-align: center;
+  margin-bottom: 24px;
+}
+h1 {
+  font-size: 24px;
+  margin: 0 0 32px;
+}
+p {
+  margin: 0;
+}
+.install {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: #f3f4f6;
+}
+code,
+input {
+  font-family: ui-monospace, monospace;
+}
+button {
+  cursor: pointer;
+  font: inherit;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 16px;
+  touch-action: manipulation;
+}
+.install button {
+  padding: 4px 8px;
+  background: transparent;
+}
+.install button:hover {
+  background: #e5e7eb;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+a {
+  color: inherit;
+}
+nav img {
+  display: block;
+}
+.generate button {
+  color: white;
+  background: #1d4ed8;
+}
+.generate button:hover {
+  background: #1e40af;
+}
+.generate p {
+  margin-top: 8px;
+  font-size: 12px;
+}
+section {
+  margin-bottom: 24px;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 16px;
+}
+:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+input[aria-invalid="true"] {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+.error {
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid #f87171;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 639px) {
+  main {
+    padding: 24px 12px;
+  }
+  h1 {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+  header > p {
+    font-size: 12px;
+  }
+  .install {
+    padding: 8px 12px;
+    gap: 8px;
+    font-size: 12px;
+  }
+  input {
+    padding: 8px;
+  }
+}

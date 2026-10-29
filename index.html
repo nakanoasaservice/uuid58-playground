@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Convert between UUID58 (Base58-encoded UUIDs) and standard UUID formats"
+    />
+    <link
+      rel="canonical"
+      href="https://nakanoasaservice.github.io/uuid58-playground/"
+    />
+    <title>UUID58 Playground</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <main x-data="playground">
+      <header>
+        <h1>UUID58 Playground</h1>
+        <p>
+          UUID58 is a Base58 encoding of the 128-bit UUID binary data, resulting
+          in a shorter, URL-safe string representation.
+        </p>
+        <div class="install">
+          <code>npm i @nakanoaas/uuid58</code>
+          <button
+            type="button"
+            @click="copy"
+            aria-label="Copy to clipboard"
+            x-text="copyStatus"
+          >
+            Copy
+          </button>
+        </div>
+        <nav aria-label="Package links">
+          <a
+            href="https://github.com/nakanoasaservice/uuid58"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a
+            href="https://jsr.io/@nakanoaas/uuid58"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img
+              src="https://jsr.io/badges/@nakanoaas/uuid58"
+              width="75"
+              height="20"
+              alt="JSR"
+          /></a>
+          <a
+            href="https://badge.fury.io/js/@nakanoaas%2Fuuid58"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img
+              src="https://badge.fury.io/js/@nakanoaas%2Fuuid58.svg"
+              width="126"
+              height="20"
+              alt="npm version"
+          /></a>
+        </nav>
+      </header>
+      <div class="generate">
+        <button type="button" @click="generate">Generate</button>
+        <p>Using crypto.getRandomValues() internally</p>
+      </div>
+      <template x-for="field in fields" :key="field.key">
+        <section>
+          <label :for="field.key + '-input'" x-text="field.label"></label>
+          <input
+            type="text"
+            :id="field.key + '-input'"
+            :value="ids[field.key]"
+            @input="convert(field.key, $event.target.value)"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            :aria-invalid="error?.field === field.key"
+            :aria-describedby="error?.field === field.key ? field.key + '-error' : null"
+          />
+          <div
+            class="error"
+            x-cloak
+            x-show="error?.field === field.key"
+            :id="field.key + '-error'"
+            role="alert"
+          >
+            <strong x-text="error?.name"></strong>
+            <p x-text="error?.message"></p>
+          </div>
+        </section>
+      </template>
+      <noscript
+        >Please enable JavaScript to generate and convert UUIDs.</noscript
+      >
+    </main>
+  </body>
+</html>

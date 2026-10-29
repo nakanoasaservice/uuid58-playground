@@ -26,23 +26,21 @@ You can try the playground here:
 
 ## Project Structure
 
+```text
+├── index.html       # Page markup and Alpine directives
+├── src/
+│   ├── main.js      # Generation, conversion, and clipboard state
+│   └── global.css   # Responsive styles
+├── public/robots.txt
+└── vite.config.js   # GitHub Pages base path
 ```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── index.tsx
-```
-
-- `src/routes`: Directory-based routing. The main page is implemented in `index.tsx`.
-- `src/components`: Place for reusable UI components.
-- `public`: Static assets (images, etc.).
 
 ## Development
 
-This project uses [Qwik](https://qwik.dev/) and [Qwik Router](https://qwik.dev/docs/routing/), with [Bun](https://bun.sh/) as the package manager and runtime.
+This project uses [Alpine.js](https://alpinejs.dev/) with plain HTML/CSS and
+[Vite](https://vite.dev/) for development and static builds. Dependencies are
+bundled locally; no runtime CDN is required for JavaScript.
+[Bun](https://bun.sh/) is the package manager and runtime.
 
 To start development:
 
@@ -59,6 +57,8 @@ To build and preview the production version locally:
 bun run build
 bun run preview
 ```
+
+Check formatting and lint with `bun run fmt.check` and `bun run lint`.
 
 ## Deployment
 
