@@ -28,10 +28,8 @@ You can try the playground here:
 
 ```text
 ├── index.html       # Page metadata and app mount point
-├── src/
-│   ├── main.tsx     # Typed UI, conversion, and clipboard state
-│   └── global.css   # Responsive styles
-├── public/robots.txt
+├── main.tsx         # Typed UI, conversion, and clipboard state
+├── global.css       # Responsive styles
 └── vite.config.ts   # Build, lint, and formatting configuration
 ```
 
