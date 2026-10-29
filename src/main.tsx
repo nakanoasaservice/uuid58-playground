@@ -70,7 +70,11 @@ function Playground() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            GitHub
+            <img
+              alt="GitHub Repo stars"
+              src="https://img.shields.io/github/stars/nakanoasaservice/uuid58"
+              height="20"
+            />
           </a>
           <a href="https://jsr.io/@nakanoaas/uuid58" target="_blank" rel="noopener noreferrer">
             <img src="https://jsr.io/badges/@nakanoaas/uuid58" width="75" height="20" alt="JSR" />
